@@ -1,19 +1,17 @@
 var http = require('http');
-var url = require('url');
-var querystring = require('querystring');
 
 var server = http.createServer(function(req, res) {
-    var params = querystring.parse(url.parse(req.url).query);//on récupère les parametre passé dans l'url
-    res.writeHead(200, {"Content-Type": "text/plain"});
-    if ('prenom' in params && 'nom' in params) {
-        res.write('Vous vous appelez ' + params['prenom'] + ' ' + params['nom']);
-    }
-    else {
-        res.write('Vous devez bien avoir un prénom et un nom, non ?');
-    }
-    res.end();
+    res.writeHead(200);
+    res.end('Salut tout le monde !');
 });
-server.listen(8080);
+
+server.on('close', function() { // On écoute l'évènement close
+    console.log('Bye bye !');
+})
+
+server.listen(8080); // Démarre le serveur
+
+server.close(); // Arrête le serveur. Déclenche l'évènement close
 
 /*require effectue un appel à une bibliothèque de Node.js, ici la bibliothèque "http"
 var http = require('http');
